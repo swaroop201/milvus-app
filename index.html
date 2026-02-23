@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chat with RAG (Retrieval-Augmented Generation) - ask questions and ingest documents.">
+  <title>Chat - RAG Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+  <div class="status-bar">
+    <div class="status-indicator">
+      <div class="status-dot api-status" title="API: Checking..." data-status="checking">
+        <span class="status-label">API</span>
+      </div>
+    </div>
+    <div class="status-indicator">
+      <div class="status-dot milvus-status" title="Milvus: Checking..." data-status="checking">
+        <span class="status-label">Milvus</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="page">
+    <header class="header">
+      <h1>Chat</h1>
+      <p>Ask anything — or add docs and ask with RAG</p>
+    </header>
+
+    <div class="ingest-card">
+      <div class="ingest-header">
+        <svg class="ingest-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="17 8 12 3 7 8"></polyline>
+          <line x1="12" y1="3" x2="12" y2="15"></line>
+        </svg>
+        <div>
+          <h3>📄 Add to RAG knowledge base</h3>
+          <p>Upload documents to enhance AI responses</p>
+        </div>
+      </div>
+      <textarea id="ingestText" placeholder="Paste or type text to ingest (e.g. docs, notes). It will be chunked and stored for RAG."></textarea>
+      <div class="ingest-actions">
+        <button type="button" id="ingestBtn">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 5v14M5 12h14"></path>
+          </svg>
+          Ingest
+        </button>
+      </div>
+    </div>
+
+    <div class="mode-tabs">
+      <button type="button" id="modeChat" class="active">Chat</button>
+      <button type="button" id="modeRag">Ask RAG</button>
+    </div>
+
+    <div class="chat-container">
+      <div class="empty-state" id="emptyState">
+        <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+        <p>💬 Ready to chat? Start typing a message...</p>
+      </div>
+      <div class="messages" id="messages"></div>
+      <div class="input-wrap">
+        <div class="input-row">
+          <input type="text" id="input" placeholder="Type a message..." autocomplete="off">
+          <button type="button" id="send" title="Send message">
+            <svg class="send-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+              <path d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 0.99,21.89 1.77946707,22.52 C2.41,22.99 3.50612381,23.1 4.13399899,22.8429026 L21.714504,14.0454487 C22.6563168,13.5741566 23.1272231,12.6315722 22.6563168,11.6889879 L4.13399899,1.16346272 C3.34915502,0.9 2.40734225,0.99 1.77946707,1.4573321 C0.994623095,2.0889763 0.837654326,3.1789209 1.15159189,3.96441781 L3.03521743,10.4054108 C3.03521743,10.5625081 3.19218622,10.7196055 3.50612381,10.7196055 L16.6915026,11.5050924 C16.6915026,11.5050924 17.1624089,11.5050924 17.1624089,12.0374335 C17.1624089,12.5697746 16.6915026,12.4744748 16.6915026,12.4744748 Z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const messagesEl = document.getElementById("messages");
+    const emptyState = document.getElementById("emptyState");
+    const inputEl = document.getElementById("input");
+    const sendBtn = document.getElementById("send");
+    const ingestText = document.getElementById("ingestText");
+    const ingestBtn = document.getElementById("ingestBtn");
+    const modeChat = document.getElementById("modeChat");
+    const modeRag = document.getElementById("modeRag");
+
+    let useRag = false;
+
+    function addMessage(text, role, isError = false) {
+      emptyState.classList.add("hidden");
+      const div = document.createElement("div");
+      div.className = "message " + (isError ? "error" : role);
+      div.textContent = text;
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function addTyping() {
+      emptyState.classList.add("hidden");
+      const div = document.createElement("div");
+      div.className = "typing";
+      div.id = "typing";
+      div.innerHTML = 'Thinking<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>';
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return div;
+    }
+
+    function removeTyping() {
+      const el = document.getElementById("typing");
+      if (el) el.remove();
+    }
+
+    function setModeRag(rag) {
+      useRag = !!rag;
+      modeChat.classList.toggle("active", !useRag);
+      modeRag.classList.toggle("active", useRag);
+      inputEl.placeholder = useRag ? "Ask a question (answered from ingested docs)..." : "Type a message...";
+    }
+
+    modeChat.addEventListener("click", () => setModeRag(false));
+    modeRag.addEventListener("click", () => setModeRag(true));
+
+    async function ingest() {
+      const text = ingestText.value.trim();
+      if (!text) return;
+      ingestBtn.disabled = true;
+      emptyState.classList.add("hidden");
+      const statusDiv = document.createElement("div");
+      statusDiv.className = "typing";
+      statusDiv.id = "ingestStatus";
+      statusDiv.textContent = "Ingesting...";
+      messagesEl.appendChild(statusDiv);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      try {
+        const res = await fetch("/ingest", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text }),
+        });
+        const data = await res.json().catch(() => ({}));
+        const statusEl = document.getElementById("ingestStatus");
+        if (statusEl) statusEl.remove();
+        if (!res.ok) {
+          addMessage(data.detail || "Ingest failed.", null, true);
+          return;
+        }
+        addMessage("Ingested " + (data.ingested || 0) + " chunk(s). You can now use Ask RAG.", "assistant");
+        ingestText.value = "";
+      } catch (err) {
+        const statusEl = document.getElementById("ingestStatus");
+        if (statusEl) statusEl.remove();
+        addMessage("Network error during ingest.", null, true);
+      } finally {
+        ingestBtn.disabled = false;
+      }
+    }
+
+    ingestBtn.addEventListener("click", ingest);
+
+    async function send() {
+      const text = inputEl.value.trim();
+      if (!text) return;
+
+      inputEl.value = "";
+      sendBtn.disabled = true;
+      addMessage(text, "user");
+      addTyping();
+
+      const endpoint = useRag ? "/task" : "/ask";
+      try {
+        const res = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text }),
+        });
+        const data = await res.json().catch(() => ({}));
+        removeTyping();
+
+        if (!res.ok) {
+          addMessage(data.detail || "Something went wrong.", null, true);
+          return;
+        }
+        let reply = data.reply || "";
+        if (useRag && data.retrieved != null) {
+          reply += "\n\n(Used " + data.retrieved + " chunk(s) from your docs.)";
+        }
+        addMessage(reply, "assistant");
+      } catch (err) {
+        removeTyping();
+        addMessage("Network error. Is the server running?", null, true);
+      } finally {
+        sendBtn.disabled = false;
+        inputEl.focus();
+      }
+    }
+
+    sendBtn.addEventListener("click", send);
+    inputEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        send();
+      }
+    });
+    inputEl.focus();
+
+    /* ========================================
+       Status Monitoring
+       ======================================== */
+    async function checkStatus() {
+      const apiStatus = document.querySelector(".api-status");
+      const milvusStatus = document.querySelector(".milvus-status");
+
+      try {
+        const apiRes = await fetch("/api/hello", { timeout: 3000 });
+        if (apiRes.ok) {
+          apiStatus.setAttribute("data-status", "healthy");
+          apiStatus.setAttribute("title", "✓ API: Healthy");
+        } else {
+          apiStatus.setAttribute("data-status", "error");
+          apiStatus.setAttribute("title", "✗ API: Error");
+        }
+      } catch (err) {
+        apiStatus.setAttribute("data-status", "error");
+        apiStatus.setAttribute("title", "✗ API: Disconnected");
+      }
+
+      try {
+        const milvusRes = await fetch("/health/milvus", { timeout: 3000 });
+        if (milvusRes.ok) {
+          milvusStatus.setAttribute("data-status", "healthy");
+          milvusStatus.setAttribute("title", "✓ Milvus: Healthy");
+        } else {
+          milvusStatus.setAttribute("data-status", "error");
+          milvusStatus.setAttribute("title", "✗ Milvus: Error");
+        }
+      } catch (err) {
+        milvusStatus.setAttribute("data-status", "error");
+        milvusStatus.setAttribute("title", "✗ Milvus: Disconnected");
+      }
+    }
+
+    // Check status on load and every 10 seconds
+    checkStatus();
+    setInterval(checkStatus, 10000);
+  </script>
+</body>
+</html>
