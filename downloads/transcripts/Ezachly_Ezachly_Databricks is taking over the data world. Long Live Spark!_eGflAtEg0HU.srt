@@ -1,0 +1,80 @@
+1
+00:00:00,080 --> 00:00:04,000
+Databricks is taking over the world of data engineering. Back 5-10 years ago there were
+
+2
+00:00:04,000 --> 00:00:07,840
+so many other technologies, now it seems like Databricks is going to be king. So we should be
+
+3
+00:00:07,840 --> 00:00:12,400
+learning it. We should be learning it quickly and powerfully and it has these new AI features that
+
+4
+00:00:12,400 --> 00:00:17,760
+we also need to be learning. So the average Databricks engineer makes like 150-200k and
+
+5
+00:00:17,760 --> 00:00:22,160
+through my five-week program I can help you get there as well. And we teach you everything that
+
+6
+00:00:22,160 --> 00:00:26,880
+you need to know from the fundamental data sets with Delta Lake and how to create very powerful
+
+7
+00:00:26,880 --> 00:00:32,240
+compact data sets as well as how to build scalable etl with apache spark at the end of this bootcamp
+
+8
+00:00:32,240 --> 00:00:36,320
+you will be able to do big pipelines fast pipelines all the different types of pipelines
+
+9
+00:00:36,320 --> 00:00:42,000
+that you need to also then feed into ai because now databricks also offers agent bricks agent
+
+10
+00:00:42,000 --> 00:00:46,880
+bricks is another ai agent platform that we will also be covering in this five week program this
+
+11
+00:00:46,880 --> 00:00:52,480
+five week program honors your time it is scheduled for the evenings so if you're a working professional
+
+12
+00:00:52,480 --> 00:00:54,000
+It's six to eight Pacific time.
+
+13
+00:00:54,440 --> 00:00:55,840
+And if you can't make any class,
+
+14
+00:00:55,900 --> 00:00:57,460
+the recording is available right after.
+
+15
+00:00:57,760 --> 00:00:59,980
+So know that like we are structured
+
+16
+00:00:59,980 --> 00:01:02,340
+for working professionals as well as students.
+
+17
+00:01:02,340 --> 00:01:03,960
+It's for everybody.
+
+18
+00:01:04,380 --> 00:01:05,600
+So if you wanna join today
+
+19
+00:01:05,600 --> 00:01:07,940
+and really take your Databricks career seriously,
+
+20
+00:01:08,380 --> 00:01:09,000
+check the link below.
+

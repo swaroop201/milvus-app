@@ -1,0 +1,444 @@
+1
+00:00:00,000 --> 00:00:03,480
+Data modeling is one of the most important skills that data engineers have to learn.
+
+2
+00:00:03,720 --> 00:00:05,660
+So how is it so important?
+
+3
+00:00:05,900 --> 00:00:11,080
+Well, at the end of the day, data modeling is the structure of the data that we create
+
+4
+00:00:11,080 --> 00:00:15,900
+for businesses because the asset that we produce for businesses is data to make better decisions.
+
+5
+00:00:16,240 --> 00:00:18,900
+And data modeling has a bunch of different components to it.
+
+6
+00:00:18,960 --> 00:00:20,220
+And we're going to talk about each of them.
+
+7
+00:00:20,360 --> 00:00:22,980
+There's the highest level, it's called conceptual data modeling.
+
+8
+00:00:23,120 --> 00:00:26,720
+Then we're going to be going over the next layer down, which is logical data modeling.
+
+9
+00:00:26,720 --> 00:00:30,180
+And then the final layer that we're going to talk about is physical data modeling.
+
+10
+00:00:30,320 --> 00:00:31,980
+In this video, we should be covering all of those.
+
+11
+00:00:32,120 --> 00:00:35,480
+So at the end of this, you should know all the ins and outs of all three types of these
+
+12
+00:00:35,480 --> 00:00:35,920
+data modeling.
+
+13
+00:00:36,140 --> 00:00:40,860
+So let's first talk about the highest level conceptual data modeling, which is the highest
+
+14
+00:00:40,860 --> 00:00:43,820
+level way of thinking about it is like, what data do we need?
+
+15
+00:00:44,040 --> 00:00:46,120
+What data does the business desire?
+
+16
+00:00:46,300 --> 00:00:48,140
+What data do we have access to?
+
+17
+00:00:48,280 --> 00:00:49,200
+What are the sources?
+
+18
+00:00:49,560 --> 00:00:50,840
+Where can we find this data?
+
+19
+00:00:51,100 --> 00:00:55,020
+Can we like think about all the relationships of this data, like at a very high level?
+
+20
+00:00:55,020 --> 00:01:00,780
+because sometimes you might want data in a business, but it's actually unfeasible to get it,
+
+21
+00:01:00,820 --> 00:01:04,120
+or it's going to take months and months and months, and it's not ROI positive,
+
+22
+00:01:04,120 --> 00:01:08,060
+because the time it would take to get the data is more than the value you can get out of it.
+
+23
+00:01:08,240 --> 00:01:13,960
+So this area of data modeling is very, very, very important, because if you get this wrong,
+
+24
+00:01:14,140 --> 00:01:19,440
+you can end up spending a lot of extra time on the data model for things that don't matter that much.
+
+25
+00:01:19,560 --> 00:01:24,620
+Like there might be an extra column or an extra table that like some data scientists ask for
+
+26
+00:01:24,620 --> 00:01:29,540
+that they're only going to use one time. And if you push back on that, it makes your job as a data
+
+27
+00:01:29,540 --> 00:01:34,180
+engineer a lot easier because you remove that requirement because it's a low value requirement.
+
+28
+00:01:34,360 --> 00:01:38,340
+So you need to be able to like walk through all the requirements of the data model at this highest
+
+29
+00:01:38,340 --> 00:01:44,960
+level. And really having a deep understanding of the business is where you can really, really shine
+
+30
+00:01:44,960 --> 00:01:50,640
+as a data engineer with conceptual data modeling. So after you have mastered the conceptual data
+
+31
+00:01:50,640 --> 00:01:54,760
+model, you skip into the next layer, which is the logical data model.
+
+32
+00:01:54,780 --> 00:02:07,885
+So the logical data model is where you start talking about like facts and dimensions and how they related Like so facts are events You can think of that as like I click the login button I purchase a product I
+
+33
+00:02:07,885 --> 00:02:12,645
+send a message to a friend. Like all of these are like events and actions that you can take on a
+
+34
+00:02:12,645 --> 00:02:17,225
+website. And these are going to be your facts because they can't really change. After I've
+
+35
+00:02:17,225 --> 00:02:23,065
+logged in on Facebook at 6.03 p.m. like I can't go back into a time machine and change that. So
+
+36
+00:02:23,065 --> 00:02:28,165
+then you have dimensions, which are going to be like your nouns or like your actors in this space,
+
+37
+00:02:28,245 --> 00:02:34,665
+right? So you have things like users or listings or posts or, you know, devices. These are all
+
+38
+00:02:34,665 --> 00:02:40,385
+like things that bring context because like I could be like, I'm a user in China who clicks
+
+39
+00:02:40,385 --> 00:02:46,085
+an ad, right? And then the user in China bit, that part of my user object, and then clicking the ad
+
+40
+00:02:46,085 --> 00:02:50,745
+is part of the fact. And so those are the ways to be thinking about all of these things. So the
+
+41
+00:02:50,745 --> 00:02:57,025
+logical data model is all about how do you find all of these entities and how are they related.
+
+42
+00:02:57,205 --> 00:03:01,905
+So like, for example, when you click on an ad on Facebook, the entities that are involved,
+
+43
+00:03:02,005 --> 00:03:06,105
+the user who clicked the ad, you also have the device that clicked the ad. You also have the
+
+44
+00:03:06,105 --> 00:03:11,085
+browser potentially that clicked the ad. And so those are three dimensions that you can bring
+
+45
+00:03:11,085 --> 00:03:18,785
+in to your fact data to make your fact data richer and more powerful. So after you have gotten the
+
+46
+00:03:18,785 --> 00:03:25,585
+logical data layer nailed down then you move into the final layer which is the physical layer and
+
+47
+00:03:25,585 --> 00:03:30,885
+this is the layer where people oftentimes like they think the physical layer is the only part
+
+48
+00:03:30,885 --> 00:03:35,285
+of data modeling when it's actually not it's actually like probably the least important in
+
+49
+00:03:35,285 --> 00:03:39,665
+some in some regards but it's also where it becomes real it becomes reality it's physical
+
+50
+00:03:39,665 --> 00:03:44,125
+data now so this is where you start looking at the schema what are the columns of your data like
+
+51
+00:03:44,125 --> 00:03:48,465
+what are the data types of your data how are you storing this data how can you compress this data
+
+52
+00:03:48,465 --> 00:03:49,325
+to make it smaller.
+
+53
+00:03:49,325 --> 00:03:50,425
+So in this space,
+
+54
+00:03:50,425 --> 00:03:51,565
+you have a couple of different
+
+55
+00:03:51,565 --> 00:03:52,965
+data modeling techniques
+
+56
+00:03:52,965 --> 00:03:54,105
+that you can look into
+
+57
+00:03:54,105 --> 00:03:55,065
+that can really help
+
+58
+00:03:55,065 --> 00:03:56,465
+understand all the way up
+
+59
+00:03:56,465 --> 00:04:07,750
+from like physical to logical to conceptual And you can like understand there a couple different paradigms here So one is called one big table So one big table essentially says you don need facts and
+
+60
+00:04:07,750 --> 00:04:12,970
+dimensions. You can essentially have a fact that has all of its context. All of the context is
+
+61
+00:04:12,970 --> 00:04:16,690
+already in the fact. So you don't need to do joins. You can just do aggregations. You don't
+
+62
+00:04:16,690 --> 00:04:22,111
+need to join at all because when data gets very big, joins become very expensive, like actually
+
+63
+00:04:22,111 --> 00:04:28,130
+joining in the nouns into your data. But the trade here, right, is that you're duplicating data,
+
+64
+00:04:28,291 --> 00:04:34,811
+right? Because every now my user data is now in every single fact, right? And say I do 300 events
+
+65
+00:04:34,811 --> 00:04:40,950
+on a data set. This is what's called the compute storage trade-off, right? Because it is duplicated
+
+66
+00:04:40,950 --> 00:04:47,570
+in storage. But why is this potentially worth it? It's because you can now do aggregations without
+
+67
+00:04:47,570 --> 00:04:52,291
+doing join and aggregations are faster than join because you don't have to like pull data from all
+
+68
+00:04:52,291 --> 00:04:56,750
+these different locations you can just aggregate right down and group very quickly and so this is
+
+69
+00:04:56,750 --> 00:05:02,330
+what is the advantage of one big table even though one big table also duplicates a lot of data and is
+
+70
+00:05:02,330 --> 00:05:07,151
+super painful so then you have the more traditional approach of facts and dimensions where like you
+
+71
+00:05:07,151 --> 00:05:11,930
+separate your nouns and you separate your verbs and your events and then you join them together
+
+72
+00:05:11,930 --> 00:05:16,651
+that's called dimensional data modeling dimensional data modeling is the oldest technique of all the
+
+73
+00:05:16,651 --> 00:05:20,690
+techniques that we have talked about, and it's the one that most data engineers should probably pick.
+
+74
+00:05:20,791 --> 00:05:24,971
+It's the most foundational and the most fundamental. So definitely, if you haven't learned about
+
+75
+00:05:24,971 --> 00:05:30,130
+dimensional data modeling, I'll put a link in the description below. I have many hours of content on
+
+76
+00:05:30,130 --> 00:05:33,911
+dimensional data modeling on my YouTube channel. And then last but not least here is called a data
+
+77
+00:05:33,911 --> 00:05:39,591
+vault. So data vault is very interesting because data vault is all about preserving the rawness of
+
+78
+00:05:39,591 --> 00:05:44,750
+the data. So you want to bring in data in its most untransformed state and kind of stack it onto
+
+79
+00:05:44,750 --> 00:05:49,750
+of things, and this allows you to essentially know exactly what the data was in its rawest form.
+
+80
+00:05:49,750 --> 00:05:54,791
+So you don't end up filtering something out that you didn't mean to or transform something that you made a mistake on.
+
+81
+00:05:54,791 --> 00:06:13,296
+And Data Vault allows you to back up into like the most raw form of the data It kind of related to ELT you know extract load transform instead of extract transform load That it kind of related to that But it also about how you actually model the data And it has a very strict kind of thing in it and like a strict kind of ideology to it That why
+
+82
+00:06:13,296 --> 00:06:16,916
+I don't really I don't really subscribe to data vault as much. I really like dimensional data
+
+83
+00:06:16,916 --> 00:06:21,656
+modeling and one big table data modeling. But at the end of the day, like it's still a very useful
+
+84
+00:06:21,656 --> 00:06:25,636
+technique and you can combine all of these techniques. I'm going to give an example. So
+
+85
+00:06:25,636 --> 00:06:32,376
+when I worked at Airbnb, I actually built a data model that was a mix of one big table and data
+
+86
+00:06:32,376 --> 00:06:37,416
+vault and dimensional data modeling. So how it worked was we use data vault to get all of the
+
+87
+00:06:37,416 --> 00:06:43,136
+inputs. So the inputs in this case were for availability and price because the host sets
+
+88
+00:06:43,136 --> 00:06:48,736
+the price rules. Like what is the daily price? Are there any discounts? Are there any like any
+
+89
+00:06:48,736 --> 00:06:52,576
+length of stay requirements? Maybe you have to book for three days or seven days, or, you know,
+
+90
+00:06:52,576 --> 00:06:54,476
+you can only book 48 hours in advance.
+
+91
+00:06:54,476 --> 00:06:57,416
+There's a lot of these different rules that hosts can set in Airbnb.
+
+92
+00:06:57,436 --> 00:07:00,736
+And so I took all those rules in their raw form and combine them
+
+93
+00:07:00,736 --> 00:07:02,516
+into one dataset called inputs.
+
+94
+00:07:02,536 --> 00:07:05,276
+And that was the data vault kind of technique that I used.
+
+95
+00:07:05,276 --> 00:07:08,996
+And then from the inputs table, we process it through to a
+
+96
+00:07:08,996 --> 00:07:11,096
+new table called listing pricing.
+
+97
+00:07:11,116 --> 00:07:14,596
+So now we actually know what the actual prices would have been given those rules.
+
+98
+00:07:14,636 --> 00:07:20,356
+And that table was one big table because it had all of the nights in one column.
+
+99
+00:07:20,356 --> 00:07:26,116
+So one of the giveaways of like a one big table data set is that it uses complex data types.
+
+100
+00:07:26,116 --> 00:07:34,976
+Like it uses things like struct and array and like map and those kind of like more complicated data types more than just like, you know, string and integer and decimal.
+
+101
+00:07:35,176 --> 00:07:38,336
+It's like one big table very often is a table within a table.
+
+102
+00:07:38,576 --> 00:07:40,576
+And that was a big thing I did here at Airbnb.
+
+103
+00:07:40,756 --> 00:07:48,036
+Keeping in mind that like you don't have to adhere to any one of these three religions when you are working with data modeling.
+
+104
+00:07:48,036 --> 00:07:50,456
+you can also kind of do whatever you want, right?
+
+105
+00:07:50,576 --> 00:07:51,656
+And mix and match.
+
+106
+00:07:51,796 --> 00:07:53,356
+It's more of an art than a science.
+
+107
+00:07:53,516 --> 00:07:55,996
+And it's really about matching business requirements
+
+108
+00:07:55,996 --> 00:07:58,336
+to the physical data modeling needs that you,
+
+109
+00:07:58,416 --> 00:08:00,196
+or the physical data modeling tools that you have.
+
+110
+00:08:00,396 --> 00:08:02,636
+So yeah, I hope you found this content interesting
+
+111
+00:08:02,636 --> 00:08:04,956
+and make sure to like, follow, and subscribe.
+

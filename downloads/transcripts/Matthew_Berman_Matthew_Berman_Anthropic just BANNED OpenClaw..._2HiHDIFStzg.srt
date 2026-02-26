@@ -1,0 +1,468 @@
+1
+00:00:00,000 --> 00:00:05,860
+This honestly might have been the biggest bag fumble that I have seen in recent AI history.
+
+2
+00:00:06,160 --> 00:00:13,140
+Anthropic just put the banhammer down on anybody that is using Anthropic's subscription
+
+3
+00:00:13,140 --> 00:00:19,380
+to power their open claw. Rob Zalkos found this initially. Major cloud code policy clear
+
+4
+00:00:19,380 --> 00:00:25,180
+from Anthropic using OAuth tokens obtained through cloud free pro max accounts in any
+
+5
+00:00:25,180 --> 00:00:32,020
+other product tool or service, including the agent SDK, we'll come back to that, is not permitted.
+
+6
+00:00:32,360 --> 00:00:37,400
+We kind of knew this was coming. We definitely knew it was against their terms of service to
+
+7
+00:00:37,400 --> 00:00:43,060
+use your Anthropic subscription outside of their core products, meaning Cloud Desktop,
+
+8
+00:00:43,420 --> 00:00:49,940
+Cloud Cowork, Cloud Code, but we all wanted to use it in OpenClaw. And the craziest part,
+
+9
+00:00:49,940 --> 00:00:57,140
+it doesn't mention OpenClaw once, but it definitely looks like they directed this at OpenClaw.
+
+10
+00:00:57,320 --> 00:01:02,120
+Here's their specific policy language from their documentation. The OAuth authentication is
+
+11
+00:01:02,120 --> 00:01:08,220
+intended exclusively for Cloud Code and Cloud AI. Using OAuth tokens obtained through Cloud,
+
+12
+00:01:08,340 --> 00:01:14,140
+free, pro, or max accounts in any other product, tool, or service, including the agent SDK,
+
+13
+00:01:14,140 --> 00:01:20,580
+is not permitted and constitutes a violation of the consumer terms of service. And people got
+
+14
+00:01:20,580 --> 00:01:26,540
+pissed, including myself. This is just such a bad look for them. Let me take a step back and
+
+15
+00:01:26,540 --> 00:01:32,300
+explain how this all happened. First, what is OpenClaw? If you haven't been on X in the last
+
+16
+00:01:32,300 --> 00:01:39,200
+three weeks, then the quick summary of OpenClaw is it is an incredibly personal and capable AI
+
+17
+00:01:39,200 --> 00:01:45,740
+assistant that can be run locally and can be powered by any of the Frontier models. Initially,
+
+18
+00:01:46,060 --> 00:01:55,480
+OpenClaw was called Clawdbot, C-L-A-W-D, not Clawd as in Anthropics Clawd. Then about three weeks ago,
+
+19
+00:01:55,600 --> 00:02:01,420
+OpenClaw absolutely exploded in popularity. Then a few days after that, Peter Steinberger,
+
+20
+00:02:01,540 --> 00:02:07,840
+the creator of OpenClaw, was contacted by Anthropic and was told, you got to change the
+
+21
+00:02:07,840 --> 00:02:15,620
+name. It is too close to our trademarked Claude, C-L-A-U-D-E. And of course, he probably knew that
+
+22
+00:02:15,620 --> 00:02:21,140
+was coming once it exploded in popularity. And so he had to change the name. There was a brief
+
+23
+00:02:21,140 --> 00:02:28,400
+moment in time where it was called Maltbot, but eventually it was renamed to OpenClaw. And the
+
+24
+00:02:28,400 --> 00:02:41,380
+OpenClaw moniker is very interesting I going to tell you why in a little bit And by the way if you want to get ahead my team created a free ebook all about open claw use cases specifically how to implement them
+
+25
+00:02:41,440 --> 00:02:45,720
+how to get them going, why they're valuable, and so much more. Go download the ebook. It's
+
+26
+00:02:45,720 --> 00:02:50,340
+completely free. I'll drop a link in the description below. So why does the OAuth token actually
+
+27
+00:02:50,340 --> 00:02:56,720
+matter? Why is everybody talking about this? Well, first, it was the default way to get open claw
+
+28
+00:02:56,720 --> 00:03:03,440
+set up and there's a reason for that anthropic tokens are incredibly expensive if you go through
+
+29
+00:03:03,440 --> 00:03:11,920
+the api which is still allowed and they give a significant discount on a per token basis to the
+
+30
+00:03:11,920 --> 00:03:18,080
+subscription so if you're using cloud code or cloud co-work or just the cloud interface directly
+
+31
+00:03:18,080 --> 00:03:22,880
+the price per token that you're paying is significantly less than if you go to the api
+
+32
+00:03:22,880 --> 00:03:29,900
+directly. So of course, people wanted to use their subscription. And by the way, this is not some way
+
+33
+00:03:29,900 --> 00:03:34,520
+to get freebie tokens. You are still paying Anthropic for your subscription. Previously,
+
+34
+00:03:34,780 --> 00:03:40,060
+I was paying $20 a month. As soon as I started using OpenClaw, I upgraded to their max plan,
+
+35
+00:03:40,160 --> 00:03:46,180
+which is $100 a month. Shortly after that, I wanted more tokens. And so I was paying $200
+
+36
+00:03:46,180 --> 00:03:51,160
+a month for their increased max plan. I mean, look at some of these prices. This is API model
+
+37
+00:03:51,160 --> 00:03:58,760
+pricing. Here's Claude Opus 4.6, $25 per million output tokens. Claude Sonnet 4.6, a little less
+
+38
+00:03:58,760 --> 00:04:05,040
+expensive, but still $15 per million output tokens, $5 per million input tokens, and $3 per
+
+39
+00:04:05,040 --> 00:04:11,280
+million output tokens, respectively, for Opus 4.6 and Sonnet 4.6. Now, those numbers don't sound
+
+40
+00:04:11,280 --> 00:04:17,860
+like a lot of money, but it adds up very quickly. I was burning through my quota through the
+
+41
+00:04:17,860 --> 00:04:24,580
+subscription. And briefly after Anthropic shut off access through the OAuth system, I switched to the
+
+42
+00:04:24,580 --> 00:04:30,900
+API and I'm going to show you how very expensive it was. And so this is what the subscription panel
+
+43
+00:04:30,900 --> 00:04:36,860
+looked like. You got a five hour rolling quota and it would fill up and then you would have to
+
+44
+00:04:36,860 --> 00:04:43,520
+wait or you could buy extra usage down here. Then you also had your weekly limit. And for the $200
+
+45
+00:04:43,520 --> 00:04:49,880
+a month plan, I was able to use a good amount of my Claude subscription without really worrying.
+
+46
+00:04:50,140 --> 00:04:55,920
+Okay, now let me show you how expensive the API directly is going to be for OpenClaw usage.
+
+47
+00:04:56,340 --> 00:05:03,000
+So here's Claude Opus 4.6. And as you can see, each request just basically saying hello to your
+
+48
+00:05:03,000 --> 00:05:15,981
+OpenClaw bot uses about 50 tokens for me which is crazy And that just a simple hello Imagine if you actually doing any kind of coding or modification or analysis content ingestion
+
+49
+00:05:16,161 --> 00:05:22,000
+none of that matters. It is all 50,000 tokens as a minimum baseline. So with some quick calculation,
+
+50
+00:05:22,000 --> 00:05:30,680
+we can see 50,000 token input. That is again, the bare minimum with zero output is 25 cents.
+
+51
+00:05:30,680 --> 00:05:38,060
+every time I say hello to Opus 4.6, it is 25 cents. And it's not that much cheaper for Sonnet 4.6.
+
+52
+00:05:38,260 --> 00:05:43,760
+This is not sustainable in the least. So of course, I switched it. And keep in mind,
+
+53
+00:05:43,860 --> 00:05:49,740
+it is significantly higher for context above 200k. And that can happen all the time. If it reads the
+
+54
+00:05:49,740 --> 00:05:55,900
+code base, it happens. If it's loading a bunch of content into the context, that happens. So
+
+55
+00:05:55,900 --> 00:06:02,360
+it's just so expensive. Okay, so now back to this original tweet, and there was a lot of confusion,
+
+56
+00:06:02,740 --> 00:06:08,820
+specifically because of this line right here, including the agent SDK. The agent SDK is an
+
+57
+00:06:08,820 --> 00:06:15,580
+endpoint that allows you to build agentic loops using Anthropic. And a lot of people thought,
+
+58
+00:06:15,700 --> 00:06:19,820
+hey, that's kind of weird. I'm using your own product. Why are you preventing me from using
+
+59
+00:06:19,820 --> 00:06:25,740
+my Anthropic subscription with it? Then Tariq from Anthropic clarified, kind of still a little bit
+
+60
+00:06:25,740 --> 00:06:30,781
+confusing apologies this was a docs cleanup we rolled out that's actually caused some confusion
+
+61
+00:06:30,781 --> 00:06:36,060
+nothing is changing about how you can use the agent sdk and max subscriptions so there you go
+
+62
+00:06:36,060 --> 00:06:41,740
+you can still use it with the agent sdk but even more clarification we want to encourage local
+
+63
+00:06:41,740 --> 00:06:48,460
+development and experimentation with the agent sdk and claude-p if you're building a business on top
+
+64
+00:06:48,460 --> 00:06:53,580
+of the agent sdk you should use an api key instead we'll make sure that's cleaner in our docs and
+
+65
+00:06:53,580 --> 00:06:55,800
+And this really angered a lot of people, as I mentioned.
+
+66
+00:06:56,200 --> 00:06:57,661
+This is a tinkerer's community.
+
+67
+00:06:57,800 --> 00:06:58,920
+It is a builder's community.
+
+68
+00:06:59,041 --> 00:07:01,380
+A bunch of people started paying Anthropic
+
+69
+00:07:01,380 --> 00:07:03,221
+and then paying Anthropic more
+
+70
+00:07:03,221 --> 00:07:04,840
+because they were using OpenClaw.
+
+71
+00:07:04,940 --> 00:07:06,460
+It's a fun side project.
+
+72
+00:07:06,620 --> 00:07:07,760
+This is not a business.
+
+73
+00:07:07,960 --> 00:07:10,860
+This is a personal project, at least for me.
+
+74
+00:07:10,980 --> 00:07:13,700
+And if it's not a personal project, I would understand that.
+
+75
+00:07:13,781 --> 00:07:14,300
+Now I get it.
+
+76
+00:07:14,320 --> 00:07:16,700
+If you go through the Anthropic subscription,
+
+77
+00:07:16,700 --> 00:07:18,900
+you're paying about 90% less
+
+78
+00:07:18,900 --> 00:07:21,600
+than if you were going to the API directly.
+
+79
+00:07:21,900 --> 00:07:23,560
+So Anthropic is like, we're losing money.
+
+80
+00:07:23,580 --> 00:07:26,460
+We only want that to be available in our own products.
+
+81
+00:07:26,460 --> 00:07:29,500
+But it still hurt and it left a sour taste in my mouth.
+
+82
+00:07:29,500 --> 00:07:32,580
+So of course I switched off of Anthropic.
+
+83
+00:07:32,580 --> 00:07:35,040
+All right, so let's look at the timeline of events now,
+
+84
+00:07:35,040 --> 00:07:50,381
+because this is really a telling story and why it put even more of a sour taste in the community mouth So first Claudebot goes viral And then a few days after that Anthropic forces Peter to change the name from Claudebot
+
+85
+00:07:50,541 --> 00:07:57,061
+then Motebot, then OpenClaw, finally OpenClaw. Then Peter flew to San Francisco, met with the
+
+86
+00:07:57,061 --> 00:08:04,101
+leading AI labs, including OpenAI. And then about a week and a half later, OpenAI acquires Peter.
+
+87
+00:08:04,101 --> 00:08:10,201
+Then yesterday, just a few days after that, Anthropic blocks OpenClaw OAuth usage.
+
+88
+00:08:10,561 --> 00:08:14,201
+And then just that same day, OpenAI says, go for it.
+
+89
+00:08:14,481 --> 00:08:16,501
+Use our OAuth through Codex.
+
+90
+00:08:16,561 --> 00:08:19,521
+In fact, it was Peter who said that they allow it.
+
+91
+00:08:19,661 --> 00:08:23,301
+So Andrew Warner says, breaking Cloud OAuth officially not allowed.
+
+92
+00:08:23,441 --> 00:08:23,981
+We knew that.
+
+93
+00:08:24,201 --> 00:08:28,681
+Then this would be a great time for Sam Altman to step in and let us use OpenAI subscription
+
+94
+00:08:28,681 --> 00:08:29,561
+with OpenClaw.
+
+95
+00:08:29,561 --> 00:08:37,281
+and Peter replies, that already works. OpenAI publicly said that. Incredible. This is really
+
+96
+00:08:37,281 --> 00:08:45,641
+one of the greatest bag fumbles and bag pickups of all time. Okay, so all that aside, what am I
+
+97
+00:08:45,641 --> 00:08:50,121
+actually doing with OpenClaw? Which models am I using? Before I had a very simple setup, I was
+
+98
+00:08:50,121 --> 00:08:56,261
+using Opus 4.6 for almost everything. I would offload some of the coding to my Cursor CLI agent,
+
+99
+00:08:56,261 --> 00:09:03,481
+but mostly I was using Opus 4.6 because it just has the best personality. So now my entire system
+
+100
+00:09:03,481 --> 00:09:10,361
+is much more complex. I don't love it, but I just didn't want to continue throwing so much money at
+
+101
+00:09:10,361 --> 00:09:15,921
+Anthropic and it was just so expensive to use the API. So here is what I do now. Yes, I am using my
+
+102
+00:09:15,921 --> 00:09:22,421
+ChatGPT subscription, which they allow for OpenClaw. Now for coding, my security council,
+
+103
+00:09:22,421 --> 00:09:29,921
+my platform council, my business meta-analysis, my innovation council, those all go to GPT 5.3
+
+104
+00:09:29,921 --> 00:09:38,121
+Codex X High Fast. And that is offloaded to my cursor agent CLI. The CRM standard goes to GPT
+
+105
+00:09:38,121 --> 00:09:43,801
+5.2. A bunch of things that should just be really fast and easy like notification classifiers,
+
+106
+00:09:43,961 --> 00:09:50,061
+re-rankers, those all go to GPT 5 Mini and the knowledge-based summarizer, prompt sync review,
+
+107
+00:09:50,061 --> 00:09:54,221
+and the default overall model goes to GPT 5.2.
+
+108
+00:09:54,441 --> 00:09:58,501
+So yes, I am primarily using ChatGPT now.
+
+109
+00:09:58,741 --> 00:10:02,601
+I have Sonnet 4.6 and Opus 4.6 Thinking as backups.
+
+110
+00:10:02,761 --> 00:10:04,281
+I'm also using Gemini.
+
+111
+00:10:04,381 --> 00:10:05,941
+Gemini 3.1 just dropped,
+
+112
+00:10:06,021 --> 00:10:07,661
+so I'm definitely gonna be testing that,
+
+113
+00:10:07,841 --> 00:10:10,961
+but I just didn't love what happened here.
+
+114
+00:10:11,341 --> 00:10:12,461
+Let me know what you think.
+
+115
+00:10:12,521 --> 00:10:13,481
+If you enjoyed this video,
+
+116
+00:10:13,621 --> 00:10:15,101
+please consider giving a like and subscribe,
+
+117
+00:10:15,301 --> 00:10:16,741
+and I'll see you in the next one.
+

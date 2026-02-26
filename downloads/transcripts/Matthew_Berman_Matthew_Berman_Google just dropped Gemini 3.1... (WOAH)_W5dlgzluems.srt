@@ -1,0 +1,352 @@
+1
+00:00:00,000 --> 00:00:04,180
+All right, it's Gemini day. Gemini 3.1 Pro is here.
+
+2
+00:00:04,740 --> 00:00:06,780
+Let me just show you the most important benchmark.
+
+3
+00:00:07,200 --> 00:00:10,560
+This is Pelican Bench, how well a model can draw
+
+4
+00:00:10,560 --> 00:00:14,360
+a pelican riding a bicycle using SVG.
+
+5
+00:00:14,560 --> 00:00:17,620
+Let's look at the progress from Gemini 3.0 to 3.1.
+
+6
+00:00:17,860 --> 00:00:21,580
+Generate an animated SVG of a pelican riding a bicycle.
+
+7
+00:00:21,760 --> 00:00:23,340
+And as you can see, it is much better,
+
+8
+00:00:23,460 --> 00:00:25,420
+much more fluid motion, but that's not all.
+
+9
+00:00:25,420 --> 00:00:30,360
+We also have a frog on a vintage penny-farthing bicycle.
+
+10
+00:00:30,640 --> 00:00:31,500
+Look at this.
+
+11
+00:00:31,600 --> 00:00:33,200
+This one doesn't even make sense at all,
+
+12
+00:00:33,260 --> 00:00:35,040
+but this one, very good.
+
+13
+00:00:35,200 --> 00:00:37,620
+Next, we have a giraffe driving a tiny car.
+
+14
+00:00:37,780 --> 00:00:39,480
+Boom, there's just so much more detail,
+
+15
+00:00:39,600 --> 00:00:40,600
+so much more movement.
+
+16
+00:00:40,940 --> 00:00:41,800
+It looks great.
+
+17
+00:00:41,940 --> 00:00:44,000
+Here's an ostrich on roller skates.
+
+18
+00:00:44,080 --> 00:00:45,900
+These are incredibly important benchmarks.
+
+19
+00:00:46,080 --> 00:00:47,320
+This is basically AGI.
+
+20
+00:00:47,740 --> 00:00:50,260
+This one is incredibly impressive, jokes aside.
+
+21
+00:00:50,580 --> 00:00:54,420
+And we also found out the Gemini 3 DeepThink model
+
+22
+00:00:54,420 --> 00:01:00,620
+that just came out last week was yes, in fact, using Gemini 3.1 Pro as the underlying model.
+
+23
+00:01:00,940 --> 00:01:06,460
+And today they are shipping 3.1 Pro across their consumer and developer products to bring this
+
+24
+00:01:06,460 --> 00:01:10,380
+progress and intelligence to your everyday applications. I can't wait to test this in
+
+25
+00:01:10,380 --> 00:01:15,640
+OpenClaw. All right, let's look at some benchmarks. This one is crazy. Look at this.
+
+26
+00:01:15,780 --> 00:01:23,380
+Humanity's last exam with no tools scores a 44.4% with search, with a block list. Basically,
+
+27
+00:01:23,380 --> 00:01:28,800
+don't get the exact answers and coding with an environment 51.4.
+
+28
+00:01:28,960 --> 00:01:43,995
+That is a substantial increase from Gemini 3 Pro and basically the same score as Opus 4 a little bit better with no tools a little bit worse with tools But it also absolutely dominates on Arc AGI 2 If you not
+
+29
+00:01:43,995 --> 00:01:48,595
+familiar with that benchmark, it's a benchmark that tests the model's ability to acquire new
+
+30
+00:01:48,595 --> 00:01:52,755
+skills through learning and generalize them quickly. Here's what that looks like. You have
+
+31
+00:01:52,755 --> 00:01:57,355
+an initial pattern. It gives you the solved version of it. Then it gives you a new version
+
+32
+00:01:57,355 --> 00:02:03,495
+and says, solve it. Shout out to friend of the channel, Greg Cameron, also president of ArcPrize.
+
+33
+00:02:03,495 --> 00:02:11,835
+So we have it scoring a 77.1%. That is double, more than double of Gemini 3 Pro. That is
+
+34
+00:02:11,835 --> 00:02:19,395
+absolutely beating everything else. Opus 4.6 coming in somewhat close at 68.8%. This is
+
+35
+00:02:19,395 --> 00:02:25,295
+substantial. Another absolute domination, GPQA Diamond. This is scientific knowledge with no
+
+36
+00:02:25,295 --> 00:02:36,275
+tools 94.3 second was gemini 3 pro at 91.9 and coming in third 92.4 gpt 5.2 thinking extra high
+
+37
+00:02:36,275 --> 00:02:44,255
+we have a fantastic coding score with sweet bench verified 80.6 basically tying opus 4.6 scoring a
+
+38
+00:02:44,255 --> 00:02:50,495
+number of points ahead of gemini 3 pro here's what's actually super interesting sonnet 4.6
+
+39
+00:02:50,495 --> 00:02:55,715
+Anthropix mid-tier model scores incredibly well across the board here.
+
+40
+00:02:55,715 --> 00:03:00,755
+I said it before when I reviewed it, it is an absolute workhorse for knowledge work.
+
+41
+00:03:00,755 --> 00:03:01,715
+Now here's the thing.
+
+42
+00:03:01,715 --> 00:03:03,015
+It is quite expensive.
+
+43
+00:03:03,015 --> 00:03:17,270
+It is less expensive than Opus 4 but it is still very expensive And if I really being honest it is my favorite model right now because it has a great personality It is fantastic at tool calling It has a million token context window
+
+44
+00:03:17,451 --> 00:03:19,430
+but boy, is it expensive.
+
+45
+00:03:19,430 --> 00:03:21,131
+And that's why I'm not using it
+
+46
+00:03:21,131 --> 00:03:23,370
+as my primary model in OpenClaw.
+
+47
+00:03:23,571 --> 00:03:25,970
+Live Code Bench scored really well.
+
+48
+00:03:26,250 --> 00:03:27,870
+SciCode, number one.
+
+49
+00:03:28,111 --> 00:03:31,291
+T2 Bench, which is agentic tool use,
+
+50
+00:03:31,391 --> 00:03:34,930
+scored nearly perfect, 99.3 in telecom.
+
+51
+00:03:34,930 --> 00:03:38,810
+MMLU, multilingual Q&A scored incredibly well.
+
+52
+00:03:38,810 --> 00:03:42,331
+So just a very high scoring model, but we all know
+
+53
+00:03:42,331 --> 00:03:44,250
+benchmarks only tell part of the story.
+
+54
+00:03:44,250 --> 00:03:45,331
+It's all about the vibes.
+
+55
+00:03:45,331 --> 00:03:47,671
+It's all about when you actually go to use it,
+
+56
+00:03:47,671 --> 00:03:50,131
+how well does it perform?
+
+57
+00:03:50,131 --> 00:03:54,150
+I actually briefly switched to Gemini 3 Pro
+
+58
+00:03:54,150 --> 00:03:56,810
+as my primary model in OpenClaw,
+
+59
+00:03:56,810 --> 00:04:00,590
+while Anthropix so meanly revoked my access
+
+60
+00:04:00,590 --> 00:04:04,750
+to using it via OAuth, and I really liked it.
+
+61
+00:04:04,750 --> 00:04:08,650
+I really liked Gemini 3, so I can't wait to try out 3.1.
+
+62
+00:04:08,870 --> 00:04:10,870
+So 3.1 Pro is designed for tasks
+
+63
+00:04:10,870 --> 00:04:12,430
+where a simple answer isn't enough,
+
+64
+00:04:12,491 --> 00:04:14,571
+taking advanced reasoning and making it useful
+
+65
+00:04:14,571 --> 00:04:15,671
+for your hardest challenges.
+
+66
+00:04:15,831 --> 00:04:18,791
+So here are a few more SVG examples.
+
+67
+00:04:19,050 --> 00:04:21,390
+I don't know why they're so focused on SVGs,
+
+68
+00:04:21,390 --> 00:04:27,050
+but it is so clearly better than Gemini 3 at SVG creation.
+
+69
+00:04:27,330 --> 00:04:30,771
+Look at this chameleon as compared to this one on the right,
+
+70
+00:04:30,810 --> 00:04:33,570
+just so much more detail, just the visual design,
+
+71
+00:04:33,570 --> 00:04:38,370
+the ability to create really compelling, beautiful SVGs is just so much better.
+
+72
+00:04:38,370 --> 00:04:55,946
+Here is a simulation of something called murmuring which is basically how a flock of birds fly together in these crazy cool patterns in the sky Watch this So this is a complete simulation of that written by Gemini 3 Pro And Jeff Dean
+
+73
+00:04:56,086 --> 00:05:01,306
+one of the best engineers in the world, the chief scientist at Google DeepMind, put together a few
+
+74
+00:05:01,306 --> 00:05:05,626
+of his favorite use cases. Check this out. So he says, I've always been interested in urban
+
+75
+00:05:05,626 --> 00:05:10,346
+planning. Here's an example of an app created with Gemini 3.1 Pro that can simulate urban
+
+76
+00:05:10,346 --> 00:05:15,946
+planning to design completely new cities. Okay, so look at that. It's actually designing a city
+
+77
+00:05:15,946 --> 00:05:22,866
+around a geographic landscape. You have a bunch of different settings, everything from pathing,
+
+78
+00:05:22,986 --> 00:05:28,906
+path collision, water features, land features, and you can edit and modify them all. Here you can
+
+79
+00:05:28,906 --> 00:05:34,466
+actually see the city blocks being built. Look at how cool that looks. It's not only functional,
+
+80
+00:05:34,466 --> 00:05:40,406
+but it really looks cool. And it actually put together a synthesis. So it generated this image
+
+81
+00:05:40,406 --> 00:05:46,686
+of what that city might look like. Unreal. Maybe this is the future of SimCity right here. Okay.
+
+82
+00:05:46,706 --> 00:05:51,846
+This is one I am particularly interested in because I've been getting into 3D printing lately. This is
+
+83
+00:05:51,846 --> 00:05:58,026
+basically prompt a CAD model. So cool. Watch this. So write manifold CAD code to build this object
+
+84
+00:05:58,026 --> 00:06:03,286
+from the technical drawing. Okay. So basically all it provided was a technical spec of what it
+
+85
+00:06:03,286 --> 00:06:08,646
+look like and you probably don't even need that and it put it together and check this out there's
+
+86
+00:06:08,646 --> 00:06:14,806
+the object in cad fully created you are now able to basically create anything you want and 3d print
+
+87
+00:06:14,806 --> 00:06:18,886
+it so that's it go try it out let me know what you think if you enjoyed this video please consider
+
+88
+00:06:18,886 --> 00:06:21,526
+giving a like and subscribe and i'll see you in the next one
+

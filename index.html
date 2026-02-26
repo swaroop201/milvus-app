@@ -53,22 +53,17 @@
       </div>
     </div>
 
-    <div class="mode-tabs">
-      <button type="button" id="modeChat" class="active">Chat</button>
-      <button type="button" id="modeRag">Ask RAG</button>
-    </div>
-
     <div class="chat-container">
       <div class="empty-state" id="emptyState">
         <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
         </svg>
-        <p>💬 Ready to chat? Start typing a message...</p>
+        <p>💬 Ask about your docs or chat freely — one place for both.</p>
       </div>
       <div class="messages" id="messages"></div>
       <div class="input-wrap">
         <div class="input-row">
-          <input type="text" id="input" placeholder="Type a message..." autocomplete="off">
+          <input type="text" id="input" placeholder="Ask about your docs or chat freely..." autocomplete="off">
           <button type="button" id="send" title="Send message">
             <svg class="send-icon" viewBox="0 0 24 24" fill="currentColor" stroke="none">
               <path d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 0.99,21.89 1.77946707,22.52 C2.41,22.99 3.50612381,23.1 4.13399899,22.8429026 L21.714504,14.0454487 C22.6563168,13.5741566 23.1272231,12.6315722 22.6563168,11.6889879 L4.13399899,1.16346272 C3.34915502,0.9 2.40734225,0.99 1.77946707,1.4573321 C0.994623095,2.0889763 0.837654326,3.1789209 1.15159189,3.96441781 L3.03521743,10.4054108 C3.03521743,10.5625081 3.19218622,10.7196055 3.50612381,10.7196055 L16.6915026,11.5050924 C16.6915026,11.5050924 17.1624089,11.5050924 17.1624089,12.0374335 C17.1624089,12.5697746 16.6915026,12.4744748 16.6915026,12.4744748 Z"/>
@@ -86,10 +81,6 @@
     const sendBtn = document.getElementById("send");
     const ingestText = document.getElementById("ingestText");
     const ingestBtn = document.getElementById("ingestBtn");
-    const modeChat = document.getElementById("modeChat");
-    const modeRag = document.getElementById("modeRag");
-
-    let useRag = false;
 
     function addMessage(text, role, isError = false) {
       emptyState.classList.add("hidden");
@@ -116,16 +107,6 @@
       if (el) el.remove();
     }
 
-    function setModeRag(rag) {
-      useRag = !!rag;
-      modeChat.classList.toggle("active", !useRag);
-      modeRag.classList.toggle("active", useRag);
-      inputEl.placeholder = useRag ? "Ask a question (answered from ingested docs)..." : "Type a message...";
-    }
-
-    modeChat.addEventListener("click", () => setModeRag(false));
-    modeRag.addEventListener("click", () => setModeRag(true));
-
     async function ingest() {
       const text = ingestText.value.trim();
       if (!text) return;
@@ -150,7 +131,7 @@
           addMessage(data.detail || "Ingest failed.", null, true);
           return;
         }
-        addMessage("Ingested " + (data.ingested || 0) + " chunk(s). You can now use Ask RAG.", "assistant");
+        addMessage("Ingested " + (data.ingested || 0) + " chunk(s). Ask about them or chat freely below.", "assistant");
         ingestText.value = "";
       } catch (err) {
         const statusEl = document.getElementById("ingestStatus");
@@ -172,7 +153,7 @@
       addMessage(text, "user");
       addTyping();
 
-      const endpoint = useRag ? "/task" : "/ask";
+      const endpoint = "/task";
       try {
         const res = await fetch(endpoint, {
           method: "POST",
@@ -187,7 +168,7 @@
           return;
         }
         let reply = data.reply || "";
-        if (useRag && data.retrieved != null) {
+        if (data.retrieved != null && data.retrieved > 0) {
           reply += "\n\n(Used " + data.retrieved + " chunk(s) from your docs.)";
         }
         addMessage(reply, "assistant");
@@ -237,7 +218,12 @@
           milvusStatus.setAttribute("title", "✓ Milvus: Healthy");
         } else {
           milvusStatus.setAttribute("data-status", "error");
-          milvusStatus.setAttribute("title", "✗ Milvus: Error");
+          let errMsg = "✗ Milvus: Error";
+          try {
+            const body = await milvusRes.json();
+            if (body.detail) errMsg = "✗ Milvus: " + body.detail;
+          } catch (_) {}
+          milvusStatus.setAttribute("title", errMsg);
         }
       } catch (err) {
         milvusStatus.setAttribute("data-status", "error");

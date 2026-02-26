@@ -1,0 +1,1128 @@
+1
+00:00:00,000 --> 00:00:03,960
+When I review AI analytics products, it can be a mixed bag.
+
+2
+00:00:03,960 --> 00:00:07,080
+They might work great, or they might hallucinate,
+
+3
+00:00:07,080 --> 00:00:10,160
+misjoin tables, create the wrong IDs,
+
+4
+00:00:10,160 --> 00:00:14,760
+misinterpret metrics, all while sounding very confident.
+
+5
+00:00:14,760 --> 00:00:18,580
+But Kube just shipped something that changes this.
+
+6
+00:00:18,580 --> 00:00:21,240
+Kube's new agentic analytics release positions them
+
+7
+00:00:21,240 --> 00:00:24,200
+not just as one of the strongest semantic layers
+
+8
+00:00:24,200 --> 00:00:26,780
+for BI and AI-driven decision systems,
+
+9
+00:00:26,780 --> 00:00:29,520
+but also introduces one of the most robust
+
+10
+00:00:29,520 --> 00:00:38,280
+AI BI agents that I've seen so far. Let's dig in. So what is cube? Cube is one of the OG
+
+11
+00:00:38,280 --> 00:00:44,320
+universal semantic layers for the modern data stack. They're one of the first of the modern
+
+12
+00:00:44,320 --> 00:00:51,560
+crop of semantic layers that come out back in the day. They still have cube core, which is their
+
+13
+00:00:51,560 --> 00:00:58,580
+open source semantic layer, and it's very awesome. But recently cube moved into the world of agentic
+
+14
+00:00:58,580 --> 00:01:04,480
+analytics. This announcement in October of 2025 really put a stake in the ground where Kube was
+
+15
+00:01:04,480 --> 00:01:10,500
+no longer just operating in the headless BI space with a semantic layer, but now using that semantic
+
+16
+00:01:10,500 --> 00:01:18,740
+layer to power AI BI agents. They've changed from the D3 name to now just Kube, and now they have a
+
+17
+00:01:18,740 --> 00:01:24,140
+semantic model agent. You can do workbooks and dashboards and much, much more. So this, again,
+
+18
+00:01:24,140 --> 00:01:31,900
+positions cube squarely in the space of competing with bi companies in the up-and-coming field of ai
+
+19
+00:01:31,900 --> 00:01:38,300
+bi so next up we're going to have a look at cube's functionality so if you're new to cube they have
+
+20
+00:01:38,300 --> 00:01:44,540
+this built-in e-commerce data set here which we can take a look at so cube has this notion of cubes
+
+21
+00:01:44,540 --> 00:01:52,060
+and views cubes are simply the tables from the source system that you're connecting to and in
+
+22
+00:01:52,060 --> 00:01:55,080
+And views encapsulate the join logic of your cubes.
+
+23
+00:01:56,120 --> 00:02:00,280
+So here is a pretty standard fare data set for e-commerce.
+
+24
+00:02:00,400 --> 00:02:02,700
+We have customers, line items, orders, and products.
+
+25
+00:02:03,300 --> 00:02:04,240
+We have an orders view.
+
+26
+00:02:04,700 --> 00:02:06,460
+And we have this e-commerce agent over here.
+
+27
+00:02:06,500 --> 00:02:07,640
+So let's ask it some questions.
+
+28
+00:02:08,480 --> 00:02:10,900
+I actually want to add something.
+
+29
+00:02:11,080 --> 00:02:15,180
+I noticed that in orders, there's completed count, return count.
+
+30
+00:02:15,180 --> 00:02:16,100
+There's a return rate.
+
+31
+00:02:16,320 --> 00:02:19,740
+Build a metric for completed rate.
+
+32
+00:02:20,480 --> 00:02:21,340
+And let's see what that does.
+
+33
+00:02:22,060 --> 00:02:25,520
+Let's give it some time here.
+
+34
+00:02:25,520 --> 00:02:31,620
+Okay, so it sees that there's an e-commerce view with relevant measures, orders count,
+
+35
+00:02:31,620 --> 00:02:34,440
+completed order count, which we can see here.
+
+36
+00:02:34,440 --> 00:02:42,920
+And now it's going to create a new git branch here and it's going to add in a new metric
+
+37
+00:02:42,920 --> 00:02:45,140
+for a completed rate.
+
+38
+00:02:45,140 --> 00:02:47,220
+And here we go.
+
+39
+00:02:47,220 --> 00:02:50,420
+So let's accept this new metric here.
+
+40
+00:02:50,420 --> 00:02:53,200
+I think it's going to test it out to make sure it works.
+
+41
+00:02:54,340 --> 00:02:55,640
+Complete rate metric is working.
+
+42
+00:02:56,480 --> 00:02:58,440
+So check.
+
+43
+00:02:58,600 --> 00:02:59,480
+All good to go.
+
+44
+00:03:00,500 --> 00:03:03,140
+And it even gives some metrics from its testing, right?
+
+45
+00:03:03,240 --> 00:03:05,580
+So overall completed rate, 90% of orders were completed.
+
+46
+00:03:06,880 --> 00:03:12,000
+And of course, a status breakdown, 100% completion rate for completed orders, which would make sense.
+
+47
+00:03:12,280 --> 00:03:15,860
+So let's commit this to get at completed rate.
+
+48
+00:03:16,360 --> 00:03:17,120
+And we're done.
+
+49
+00:03:17,120 --> 00:03:21,460
+Okay, so let's check out the agent.
+
+50
+00:03:21,460 --> 00:03:24,520
+So I'm going to ask it a simple question.
+
+51
+00:03:24,520 --> 00:03:28,240
+Give me the completed order rate by time.
+
+52
+00:03:28,240 --> 00:03:35,240
+So I give it a pretty simple question with a very vague qualifier by time.
+
+53
+00:03:35,240 --> 00:03:36,240
+But let's see what it does.
+
+54
+00:03:36,240 --> 00:03:37,880
+Let's see how it handles this request.
+
+55
+00:03:37,880 --> 00:03:42,480
+Okay, so it's searching the semantic model.
+
+56
+00:03:42,480 --> 00:03:49,840
+found or orders a completed rate measure and it's also using the e-commerce orders date dimension
+
+57
+00:03:50,720 --> 00:03:58,960
+so here we have completed rate by month as well as ai summarized findings here so i haven't analyzed
+
+58
+00:03:58,960 --> 00:04:03,600
+the numbers i'm assuming this is correct the cool thing is i can also look at this as a chart i can
+
+59
+00:04:03,600 --> 00:04:08,800
+look at the sql that it generates the semantic sql as well as the generated sql and let's ask
+
+60
+00:04:08,800 --> 00:04:14,480
+a qualifying question here. I would actually like to see the completed rate trends year over year.
+
+61
+00:04:15,440 --> 00:04:20,720
+So again, it's going to crunch this query against the semantic views that it has.
+
+62
+00:04:21,920 --> 00:04:25,520
+And I think it's an important distinction here is that it queries a semantic model,
+
+63
+00:04:25,520 --> 00:04:29,200
+right? It's not just doing text to SQL. This is a very important qualifier. And again,
+
+64
+00:04:29,200 --> 00:04:35,920
+here's the completed rate. I'm guessing it looks great, but remarkable stability. And there's
+
+65
+00:04:35,920 --> 00:04:37,280
+It's obviously a slight improvement.
+
+66
+00:04:37,640 --> 00:04:43,000
+But as you can see here, the important thing to know is that the, the query
+
+67
+00:04:43,000 --> 00:04:48,300
+that you give the agent does go and check against the semantic model that
+
+68
+00:04:48,300 --> 00:04:50,660
+you created over in the IDE here.
+
+69
+00:04:50,960 --> 00:04:53,920
+So these, this provides the guard rails for your queries.
+
+70
+00:04:55,000 --> 00:05:06,485
+So next up we going to build a workbook flow and a dashboard So Kube has this notion of workbooks which is where you can do work
+
+71
+00:05:06,865 --> 00:05:10,825
+In this case, we're using the e-commerce data set that they provide here.
+
+72
+00:05:11,185 --> 00:05:14,685
+So again, these are line items, customers, orders, and products.
+
+73
+00:05:17,205 --> 00:05:19,145
+And we have a number of workbooks here.
+
+74
+00:05:19,605 --> 00:05:24,265
+There's the completed rate dashboard here, which we can edit.
+
+75
+00:05:24,885 --> 00:05:28,545
+There's a workbook.
+
+76
+00:05:28,545 --> 00:05:31,045
+And let's maybe create another one here.
+
+77
+00:05:31,045 --> 00:05:39,825
+So if we have our e-commerce view here, I want to create a workbook that shows the top
+
+78
+00:05:39,825 --> 00:05:42,965
+customers or something like that.
+
+79
+00:05:42,965 --> 00:05:47,285
+Show me the top customers for 2024.
+
+80
+00:05:47,285 --> 00:05:49,125
+And we're going to let that run.
+
+81
+00:05:49,125 --> 00:05:50,125
+Okay.
+
+82
+00:05:50,125 --> 00:05:54,725
+Looks like Hayes, Hayes and Metz, Metz are our two biggest customers here.
+
+83
+00:05:55,365 --> 00:06:00,245
+Hayes spent a whopping $194,000 in 2024.
+
+84
+00:06:01,025 --> 00:06:05,325
+Metz wasn't too far behind with $191,000.
+
+85
+00:06:05,605 --> 00:06:07,525
+So big high rollers here.
+
+86
+00:06:08,025 --> 00:06:10,385
+But let's maybe create another workbook here.
+
+87
+00:06:11,825 --> 00:06:14,605
+Okay, so in this quick case, I'm going to create a new chat.
+
+88
+00:06:14,605 --> 00:06:20,345
+and what are my top selling products for 2024.
+
+89
+00:06:21,945 --> 00:06:22,485
+Okay.
+
+90
+00:06:23,225 --> 00:06:24,845
+So we have a new workbook here.
+
+91
+00:06:24,945 --> 00:06:26,165
+We're going to investigate products.
+
+92
+00:06:26,845 --> 00:06:27,385
+Okay.
+
+93
+00:06:27,645 --> 00:06:28,185
+That's terrific.
+
+94
+00:06:28,445 --> 00:06:35,365
+We've sold a $1.4 million of the Hyperview AK70 TV,
+
+95
+00:06:36,005 --> 00:06:37,445
+an Altair laptop,
+
+96
+00:06:38,105 --> 00:06:40,405
+a fabulous laptop from the 70s or the 80s.
+
+97
+00:06:40,405 --> 00:06:42,205
+And then we have other products here.
+
+98
+00:06:42,325 --> 00:06:43,465
+But let's visualize this.
+
+99
+00:06:43,465 --> 00:06:47,065
+I actually want to create a graph similar to this here.
+
+100
+00:06:47,605 --> 00:06:51,085
+And we also have other options for charts here.
+
+101
+00:06:51,085 --> 00:06:54,845
+So as you can see, we have the option of having horizontal stack bar,
+
+102
+00:06:54,845 --> 00:06:56,845
+but maybe I want something different.
+
+103
+00:06:56,965 --> 00:07:04,045
+Maybe I want a group bar or I prefer looking at things like this.
+
+104
+00:07:04,465 --> 00:07:08,425
+So you have a lot of flexibility with the types of charts that you
+
+105
+00:07:08,425 --> 00:07:18,745
+choose for your needs. Cool. So now let's do a new chat here and let's say create a
+
+106
+00:07:18,745 --> 00:07:26,185
+new dashboard with key metrics and trends. And what it's going to do is it's
+
+107
+00:07:26,185 --> 00:07:31,945
+actually going to go through these workbooks here and create a new
+
+108
+00:07:31,945 --> 00:07:39,265
+dashboard that is encompassing of the various workbooks that we have. So now we
+
+109
+00:07:39,265 --> 00:07:42,345
+have a comprehensive dashboard that's creating with key business metrics and
+
+110
+00:07:42,345 --> 00:07:49,825
+trends with our existing reports. So it's kind of cool to see. Okay, so this is our
+
+111
+00:07:49,825 --> 00:07:54,025
+new and improved dashboard here. Obviously you can incorporate as many
+
+112
+00:07:54,025 --> 00:07:57,805
+workbooks as you want but this kind of gives you an idea of how Kube is able to
+
+113
+00:07:57,805 --> 00:08:04,225
+combine the various workbooks and the data that you've been analyzing those workbooks and combine
+
+114
+00:08:04,225 --> 00:08:07,945
+them into one dashboard here. So again, we have our top selling products. We have our completed rate.
+
+115
+00:08:08,205 --> 00:08:14,505
+We have our top customers, as well as some strategic insights. We can generate an AI summary
+
+116
+00:08:14,505 --> 00:08:19,785
+here. And there's more here. I think I need to expand this down here, but you kind of get the
+
+117
+00:08:19,785 --> 00:08:24,925
+idea. So this is pretty cool, right? If I were to try and do this by hand, it would take a while.
+
+118
+00:08:24,925 --> 00:08:32,325
+Now, Kube's AI agent is smart enough to build the dashboard on its own.
+
+119
+00:08:33,905 --> 00:08:38,845
+And as you can see, it's comprehensive of the workbooks that we've created here.
+
+120
+00:08:39,385 --> 00:08:46,365
+So again, here's your strategic insights, your AI summary, as well as strategic recommendations.
+
+121
+00:08:47,725 --> 00:08:49,085
+So I think that's pretty cool.
+
+122
+00:08:50,805 --> 00:08:52,165
+As well as action priorities.
+
+123
+00:08:52,165 --> 00:09:05,785
+So again, the nice thing with this is you're not just getting a dashboard where you are staring at a graph or chart and filtering stuff and narrowing down date ranges and so forth.
+
+124
+00:09:05,945 --> 00:09:12,485
+It's great, but the essence of a dashboard should be to provide actionable insights, action being the key word.
+
+125
+00:09:12,485 --> 00:09:20,625
+And what I really like about this is it gives you the numbers that you need to know and the information you need to know as well as action items for you.
+
+126
+00:09:20,625 --> 00:09:25,985
+So to me, that's a huge improvement over the kind of the old ways we've been passively using dashboards.
+
+127
+00:09:26,665 --> 00:09:29,385
+And these will update as the data updates.
+
+128
+00:09:30,665 --> 00:09:32,485
+And yeah, it's really awesome.
+
+129
+00:09:32,785 --> 00:09:42,025
+So we can publish these changes here to our dashboard, share it with other users, and hopefully we improve our business.
+
+130
+00:09:43,385 --> 00:09:43,785
+All right.
+
+131
+00:09:43,885 --> 00:09:47,185
+Demo data is great, but let's create something more interesting.
+
+132
+00:09:47,185 --> 00:09:51,025
+Let's create a new deployment to BigQuery.
+
+133
+00:09:51,025 --> 00:10:06,630
+So I going to create a new deployment here for my AI eval agent First thing we can do is create a deployment And I going to give it a name agent eval GCP
+
+134
+00:10:07,571 --> 00:10:08,890
+and choose Google Cloud,
+
+135
+00:10:09,571 --> 00:10:10,351
+choose the region.
+
+136
+00:10:12,290 --> 00:10:13,831
+Okay, so we only have Iowa in this case.
+
+137
+00:10:14,091 --> 00:10:14,910
+And then it's pretty straightforward.
+
+138
+00:10:15,191 --> 00:10:16,870
+You just click BigQuery,
+
+139
+00:10:18,231 --> 00:10:19,231
+give it your credentials,
+
+140
+00:10:19,591 --> 00:10:21,191
+and then off to the races.
+
+141
+00:10:22,130 --> 00:10:24,750
+So in this case, I've already created the cubes,
+
+142
+00:10:24,770 --> 00:10:26,931
+I'm creating the views right now.
+
+143
+00:10:26,931 --> 00:10:29,530
+As we saw in the last Ecom video,
+
+144
+00:10:29,530 --> 00:10:32,010
+views are simply a way to join the tables together.
+
+145
+00:10:32,010 --> 00:10:34,410
+The agent is performing all these joins
+
+146
+00:10:34,410 --> 00:10:37,410
+and creating the views as you can see here.
+
+147
+00:10:37,410 --> 00:10:39,971
+And it continues to create more and more of them.
+
+148
+00:10:39,971 --> 00:10:43,071
+And these are the views that our agent
+
+149
+00:10:43,071 --> 00:10:47,111
+will then use for its tasks.
+
+150
+00:10:47,111 --> 00:10:50,270
+So again, the order of operations is you gotta have the cubes
+
+151
+00:10:50,270 --> 00:10:52,071
+and then the views.
+
+152
+00:10:52,071 --> 00:10:55,851
+So it looks like we have everything we need, which
+
+153
+00:10:55,851 --> 00:10:56,910
+is great.
+
+154
+00:10:56,910 --> 00:10:59,250
+It gives you a nice explanation of what it did there.
+
+155
+00:10:59,250 --> 00:11:02,150
+And then, should be good to go.
+
+156
+00:11:02,150 --> 00:11:07,611
+When testing AI agents, I like to have a consistent framework
+
+157
+00:11:07,611 --> 00:11:10,551
+to ask agents questions.
+
+158
+00:11:10,551 --> 00:11:14,250
+I developed a AI agent golden gauntlet for exactly that
+
+159
+00:11:14,250 --> 00:11:15,390
+purpose here.
+
+160
+00:11:15,390 --> 00:11:19,130
+And so we can use this to test out
+
+161
+00:11:19,130 --> 00:11:22,671
+cubes analytics agent, which we're going to do.
+
+162
+00:11:22,671 --> 00:11:25,370
+I have a series of questions I'm going to ask,
+
+163
+00:11:25,370 --> 00:11:26,951
+and we'll see the responses.
+
+164
+00:11:26,951 --> 00:11:31,191
+These questions are not just text to SQL,
+
+165
+00:11:31,191 --> 00:11:36,231
+but also test things like agentic reasoning, self-joins,
+
+166
+00:11:36,231 --> 00:11:37,571
+window functions, and so forth.
+
+167
+00:11:37,571 --> 00:11:39,351
+These are the types of questions that you
+
+168
+00:11:39,351 --> 00:11:42,811
+would expect a mid to senior analyst
+
+169
+00:11:42,811 --> 00:11:45,770
+to be able to figure out when asked a question.
+
+170
+00:11:45,770 --> 00:11:47,290
+So let's get going.
+
+171
+00:11:47,290 --> 00:11:51,671
+Okay, it's time to run Kube through the gauntlet.
+
+172
+00:11:52,530 --> 00:11:55,171
+So let's start off with an easy question here.
+
+173
+00:11:55,171 --> 00:11:58,410
+Show me all employees in the engineering department.
+
+174
+00:11:59,410 --> 00:12:03,351
+So here we're using our agent eval GCP agent,
+
+175
+00:12:03,351 --> 00:12:06,331
+and it should be a pretty simple question
+
+176
+00:12:06,331 --> 00:12:09,290
+for Kube's agent to answer.
+
+177
+00:12:09,290 --> 00:12:12,331
+Let's find out what it says.
+
+178
+00:12:13,191 --> 00:12:17,191
+Just for context, the data here should be this list here.
+
+179
+00:12:17,290 --> 00:12:21,130
+These are the employees in the engineering department.
+
+180
+00:12:21,130 --> 00:12:23,111
+So there's six of them.
+
+181
+00:12:23,111 --> 00:12:25,611
+And there's six.
+
+182
+00:12:25,611 --> 00:12:27,311
+Let's make sure we got the right ones here.
+
+183
+00:12:27,311 --> 00:12:31,870
+We got Bob, Charlie, Kate, Leo, Maya, and Nina.
+
+184
+00:12:31,870 --> 00:12:36,250
+Bob, Charlie, Kate, Leo, Maya, and Nina.
+
+185
+00:12:36,250 --> 00:12:37,691
+Yep, all good.
+
+186
+00:12:37,691 --> 00:12:39,130
+All good.
+
+187
+00:12:39,130 --> 00:12:42,290
+And so it even gives further information here
+
+188
+00:12:42,290 --> 00:12:43,931
+about the employees.
+
+189
+00:12:43,931 --> 00:12:45,370
+And it also says who reports to who.
+
+190
+00:12:45,370 --> 00:12:50,731
+So let's actually do another question here related to this,
+
+191
+00:12:50,731 --> 00:12:53,650
+which is, show me all employees earning more
+
+192
+00:12:53,650 --> 00:12:55,611
+than their manager.
+
+193
+00:12:55,611 --> 00:13:00,091
+Well, it's a touchy subject, but let's see.
+
+194
+00:13:00,091 --> 00:13:01,790
+You can visually see this here, but let's
+
+195
+00:13:01,790 --> 00:13:03,770
+see what this comes up with.
+
+196
+00:13:03,770 --> 00:13:07,171
+So in this case, we're also testing for the ability
+
+197
+00:13:07,171 --> 00:13:09,191
+to do a self-join.
+
+198
+00:13:09,191 --> 00:13:12,971
+So I had run this before, so I had the results cache here.
+
+199
+00:13:12,971 --> 00:13:15,311
+But if you look at the reasoning trace here,
+
+200
+00:13:15,311 --> 00:13:17,370
+there's a bit more complicated SQL logic
+
+201
+00:13:17,370 --> 00:13:20,910
+it would have to do to answer this question.
+
+202
+00:13:20,910 --> 00:13:24,650
+So if we look at the semantic SQL here,
+
+203
+00:13:24,650 --> 00:13:31,490
+we can see that it returns the results correctly.
+
+204
+00:13:31,490 --> 00:13:34,250
+So let's go to another question here,
+
+205
+00:13:34,250 --> 00:13:38,351
+which is rank employees by salary within each department.
+
+206
+00:13:38,351 --> 00:13:40,951
+So if you're a data analyst, you can probably
+
+207
+00:13:40,951 --> 00:13:47,770
+guess how you're going to solve this. The intention is to see if the agent is capable of figuring out
+
+208
+00:13:47,770 --> 00:13:51,971
+how to use a window function to do ranking. Obviously, there are other ways to rank, but
+
+209
+00:13:51,971 --> 00:13:56,490
+windows, in my opinion, pretty simple. And let's look at the reasoning trace here, right? User
+
+210
+00:13:56,490 --> 00:14:01,731
+wants to rank employees by salary within each department. This had run before, but again,
+
+211
+00:14:01,831 --> 00:14:09,990
+same pattern, use a window function, run over partition by department order by salary and
+
+212
+00:14:09,990 --> 00:14:14,790
+sending order. And so it gets this correct as well. So if we look at all the data here,
+
+213
+00:14:15,451 --> 00:14:22,630
+this is sorted correctly. Okay, let's ask it a question that should show whether or not
+
+214
+00:14:22,630 --> 00:14:30,250
+the agent is hallucinating. What's the customer satisfaction score for our premium users?
+
+215
+00:14:30,250 --> 00:14:41,010
+In this case, this data might partially exist in the data set, but it doesn't completely
+
+216
+00:14:41,010 --> 00:14:42,010
+exist.
+
+217
+00:14:42,010 --> 00:14:45,490
+And so this will test whether or not the agent makes things up.
+
+218
+00:14:45,490 --> 00:14:47,071
+Okay, this is great.
+
+219
+00:14:47,071 --> 00:14:51,490
+So the results the agent comes back with are based on the exploration.
+
+220
+00:14:51,490 --> 00:15:06,496
+You can see customer satisfaction score metrics are not currently available in the system It tells you what the data includes but there are no specific customer satisfaction scores ratings or feedback metrics that it can assess the answer to the question
+
+221
+00:15:07,296 --> 00:15:12,816
+Then it gives you some suggestions. If you wanted this information, here's how you can get it. And
+
+222
+00:15:12,816 --> 00:15:16,816
+then it offers to explore other avenues, which we're not going to do right now. But anyway,
+
+223
+00:15:16,816 --> 00:15:27,216
+So this is, I would say, from very easy here to medium complexity, getting a bit more tricky here,
+
+224
+00:15:28,056 --> 00:15:33,216
+to a question that it really can't answer unless it was hallucinating, in which case it did honestly answer.
+
+225
+00:15:33,356 --> 00:15:40,836
+So the cube agent does at least pass the questions I asked it out of the golden gauntlet test that I have.
+
+226
+00:15:41,456 --> 00:15:42,076
+So that's awesome.
+
+227
+00:15:42,076 --> 00:15:48,296
+If you zoom out, to me, the real claim Cube is making here isn't that they added an AI agent.
+
+228
+00:15:48,976 --> 00:15:51,536
+Nowadays, every BI vendor has an AI agent.
+
+229
+00:15:52,076 --> 00:15:59,096
+The real claim, to me, is that analytics can move from dashboards to agents without losing correctness.
+
+230
+00:16:00,056 --> 00:16:02,516
+Everything you just saw depends on that idea.
+
+231
+00:16:03,256 --> 00:16:05,496
+The agent worked because it wasn't guessing.
+
+232
+00:16:05,496 --> 00:16:12,136
+It wasn't blindly inferring joins. It wasn't magically redefining metrics on the fly.
+
+233
+00:16:13,056 --> 00:16:16,536
+Instead, the agent was operating inside a semantic model.
+
+234
+00:16:17,116 --> 00:16:21,756
+And Kube has one of the most robust and battle-tested semantic layers in the industry.
+
+235
+00:16:22,336 --> 00:16:25,616
+And that distinction matters more than most people realize.
+
+236
+00:16:26,716 --> 00:16:30,276
+Most agentic analytic systems fail for predictable reasons.
+
+237
+00:16:30,276 --> 00:16:39,116
+They let the model infer meaning from the database schema, or they optimize for fluent answers instead of correct ones.
+
+238
+00:16:39,616 --> 00:16:42,116
+They treat business logic as optional.
+
+239
+00:16:42,876 --> 00:16:46,596
+Just run a query and get an answer. It might be right or not.
+
+240
+00:16:47,416 --> 00:16:55,376
+That works for polished demos, but it breaks the moment you put real metrics, real stakeholders, and real consequences behind it.
+
+241
+00:16:56,036 --> 00:16:59,476
+The failure mode usually isn't bad SQL. It's bad semantics.
+
+242
+00:17:00,276 --> 00:17:05,456
+What Kube is doing differently is treating the semantic layer as first-class infrastructure.
+
+243
+00:17:05,456 --> 00:17:09,356
+With a strong semantic layer, the agent isn't just improvising.
+
+244
+00:17:09,356 --> 00:17:13,056
+It's constrained by the guardrails of the semantic layer.
+
+245
+00:17:13,056 --> 00:17:17,096
+And that's why the answers in my review stayed stable, even as I asked increasingly harder
+
+246
+00:17:17,096 --> 00:17:21,956
+questions that would even stump seasoned analysts.
+
+247
+00:17:21,956 --> 00:17:27,276
+And that's why the system knew when to refuse or push back on my request.
+
+248
+00:17:27,276 --> 00:17:30,056
+Now, Kube's approach does come with some trade-offs.
+
+249
+00:17:30,716 --> 00:17:31,756
+This assumes discipline.
+
+250
+00:17:33,116 --> 00:17:35,176
+You need defined metrics.
+
+251
+00:17:35,796 --> 00:17:37,576
+You need agreement on business logic.
+
+252
+00:17:38,036 --> 00:17:42,156
+These are the classic problems with data modeling in general.
+
+253
+00:17:42,736 --> 00:17:45,096
+It's the hard work that stumps a lot of data teams.
+
+254
+00:17:45,556 --> 00:17:49,296
+So you need to treat analytics more like software than ad hoc exploration.
+
+255
+00:17:49,716 --> 00:17:55,136
+If you're hoping AI will just paper over the chaos in your semantics and your business logic,
+
+256
+00:17:55,516 --> 00:17:56,956
+this will feel like a lot of extra work.
+
+257
+00:17:57,276 --> 00:18:02,696
+and it should. Adding agents to unclear or undefined metrics doesn't improve analytics.
+
+258
+00:18:03,276 --> 00:18:10,956
+It just makes mistakes appear much faster. So who's Cube's agentic analytics for right now?
+
+259
+00:18:11,516 --> 00:18:18,196
+I think if you're a data team that already cares about correctness and you have semantic layers
+
+260
+00:18:18,196 --> 00:18:23,056
+and you're willing to go to the next level, you're starting to think about seriously introducing AI
+
+261
+00:18:23,056 --> 00:18:27,376
+agents into your analytics stack then cube is one of the most serious options on the table right now
+
+262
+00:18:28,096 --> 00:18:32,656
+if you're still figuring out what your core metrics mean and in the process of defining
+
+263
+00:18:32,656 --> 00:18:38,016
+your business logic and your data model adding an agent won't save you that much time i think
+
+264
+00:18:38,016 --> 00:18:41,616
+it will actually make things worse you need semantics first you need to put in the work
+
+265
+00:18:42,256 --> 00:18:48,576
+so what i'll be watching for next from cube isn't a bunch of flashy features or a new ui it's how
+
+266
+00:18:48,576 --> 00:18:53,036
+How this holds up under pressure, especially as AI agents start running around all of our
+
+267
+00:18:53,036 --> 00:18:54,036
+systems.
+
+268
+00:18:54,036 --> 00:18:58,396
+This means I'll be looking at more complex metrics, the ability to solve more complex
+
+269
+00:18:58,396 --> 00:19:03,776
+problems, stricter access controls, multiple agents hitting the same semantic layer.
+
+270
+00:19:03,776 --> 00:19:08,856
+This is where agentic analytics either becomes part of the real infrastructure and systems
+
+271
+00:19:08,856 --> 00:19:12,176
+that we use every day, or it stays a controlled demo.
+
+272
+00:19:12,176 --> 00:19:19,176
+So the bottom line is, if you care about the accuracy of analytics in an increasingly AI-driven
+
+273
+00:19:19,176 --> 00:19:23,296
+world, Kube's agentic analytics platform is worth your time.
+
+274
+00:19:23,296 --> 00:19:27,456
+I'll keep stress testing it and report back if I find anything new.
+
+275
+00:19:27,456 --> 00:19:29,696
+This video is sponsored by Kube.
+
+276
+00:19:29,696 --> 00:19:35,316
+They supported this review, but the content and opinions are entirely my own.
+
+277
+00:19:35,316 --> 00:19:37,836
+Thanks to Kube for partnering with me on this video.
+
+278
+00:19:37,836 --> 00:19:43,696
+If you want to explore this yourself, you can head to cube.dev and they have a sandbox
+
+279
+00:19:43,696 --> 00:19:50,496
+environment where you can experiment and try the analytics agent directly on your own.
+
+280
+00:19:50,496 --> 00:19:56,296
+And if you want more reviews like this one, focused on real systems, not toy demos, subscribe
+
+281
+00:19:56,296 --> 00:19:57,296
+to this channel.
+
+282
+00:19:57,296 --> 00:19:59,376
+I'll keep testing this stuff so you don't have to.
+

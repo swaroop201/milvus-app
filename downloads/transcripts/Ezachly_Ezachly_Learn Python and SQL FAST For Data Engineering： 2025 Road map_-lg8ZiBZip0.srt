@@ -1,0 +1,280 @@
+1
+00:00:00,000 --> 00:00:06,100
+If you start in data engineering, one of the things that people scream at you is learn SQL and learn Python.
+
+2
+00:00:06,400 --> 00:00:11,640
+They don't really ever really tell you why you should learn SQL and you should learn Python.
+
+3
+00:00:11,960 --> 00:00:15,800
+So in this video, we're going to be covering why you should learn SQL, why you should learn Python,
+
+4
+00:00:16,100 --> 00:00:18,860
+when you should use SQL, when you should use Python,
+
+5
+00:00:18,860 --> 00:00:23,960
+and all of the things that kind of make data engineering come together and come to life.
+
+6
+00:00:24,240 --> 00:00:26,560
+So yeah, let's get into it.
+
+7
+00:00:26,700 --> 00:00:28,520
+So first off, we have SQL.
+
+8
+00:00:28,520 --> 00:00:31,660
+So some of you might have noticed that it sometimes is called SQL.
+
+9
+00:00:31,880 --> 00:00:33,340
+Sometimes it's called SQL.
+
+10
+00:00:33,740 --> 00:00:35,740
+Both names are totally acceptable.
+
+11
+00:00:35,980 --> 00:00:41,200
+Generally speaking, the more experienced you get, you go from calling it SQL to calling it SQL.
+
+12
+00:00:41,400 --> 00:00:43,580
+Just because it's just a little bit fancier, right?
+
+13
+00:00:43,860 --> 00:00:45,180
+It's one less syllable, by the way.
+
+14
+00:00:45,320 --> 00:00:52,060
+There's a lot of history behind that because like there was two different versions of SQL like freaking 70 years ago or something like that.
+
+15
+00:00:52,120 --> 00:00:54,680
+And then like one was called SQL and one was called SQL.
+
+16
+00:00:54,980 --> 00:00:56,700
+And then they kind of like competed.
+
+17
+00:00:56,700 --> 00:00:59,460
+And so like, then they became the same thing, essentially.
+
+18
+00:00:59,460 --> 00:01:00,420
+It's a lot of culture there.
+
+19
+00:01:00,420 --> 00:01:03,780
+Definitely look it up if you're interested in that, but like at the end of the day,
+
+20
+00:01:03,780 --> 00:01:10,920
+SQL is used to transform data so you can use it to do things like count data.
+
+21
+00:01:10,920 --> 00:01:24,415
+So maybe you want to count how many times I logged in or count how many times I have liked posts different things like that That like aggregating data at Facebook we call that move fast and count things which is a very common like analytical
+
+22
+00:01:24,415 --> 00:01:29,055
+pattern. Another one is join. So sometimes you need to take two different data tables and two
+
+23
+00:01:29,055 --> 00:01:34,095
+different data sets and merge them together. And you need to use this on a join key, like,
+
+24
+00:01:34,095 --> 00:01:40,655
+so you can based on like user ID. So for example, like the data for the events might have a user ID
+
+25
+00:01:40,655 --> 00:01:45,775
+in it, but it doesn't have country. So say we want to know like the number of events by country,
+
+26
+00:01:45,775 --> 00:01:51,035
+then we have to join the user data where we have the user's country. And then we have the event
+
+27
+00:01:51,035 --> 00:01:56,655
+data that has the user and the event. And then you join those datas together and then aggregate.
+
+28
+00:01:56,835 --> 00:02:01,475
+And that can be a very powerful thing. So that's called join. Join is going to be the other most
+
+29
+00:02:01,475 --> 00:02:07,995
+important keyword that you use in SQL to create powerful data sets. If you know those two, you
+
+30
+00:02:07,995 --> 00:02:13,295
+know, join and group by, you're going to get very far. But let's cover just the other, you know,
+
+31
+00:02:13,335 --> 00:02:18,135
+simple keywords that are available in SQL. So you have select, which you just have to put at the top
+
+32
+00:02:18,135 --> 00:02:22,635
+to like list the columns that you are going to pick. This is kind of like the columns in Excel
+
+33
+00:02:22,635 --> 00:02:27,075
+that you would work with. And then you have where the where clause is just for filtering data so
+
+34
+00:02:27,075 --> 00:02:31,375
+that you can remove rows from the data table. So like if there's any bad data or whatever,
+
+35
+00:02:31,375 --> 00:02:44,590
+it very common to like filter out bad data or weird data in the where clause in your SQL query That the basics right You can do a couple other things right Like you might need to do a thing called insert into So this
+
+36
+00:02:44,590 --> 00:02:49,750
+is how you create new data. And we will be going over how to do insert into in the lab here in a
+
+37
+00:02:49,750 --> 00:02:54,590
+little bit. And you might also need to run a thing called delete. So that's where you delete data.
+
+38
+00:02:54,810 --> 00:02:59,270
+And then there's also an update command where you can update data. Someone changes their name or
+
+39
+00:02:59,270 --> 00:03:03,550
+they change their country or something like that. Those are going to be pretty much all of the
+
+40
+00:03:03,550 --> 00:03:07,430
+commands that you need to learn in SQL. It's actually pretty straightforward to learn. Like
+
+41
+00:03:07,430 --> 00:03:13,210
+we'll be going over all of these fundamentals here very soon. SQL is great, but it only can really
+
+42
+00:03:13,210 --> 00:03:19,391
+move data that is already in the warehouse or database or in the data lake. If it doesn't,
+
+43
+00:03:19,451 --> 00:03:25,490
+then SQL doesn't work as well. You need to use a different tool to get the data into the database
+
+44
+00:03:25,490 --> 00:03:26,731
+or into the data lake.
+
+45
+00:03:26,830 --> 00:03:29,110
+And that tool is almost always Python.
+
+46
+00:03:29,490 --> 00:03:31,231
+So Python is a programming language
+
+47
+00:03:31,231 --> 00:03:34,590
+that is actually designed to be very easy to learn.
+
+48
+00:03:34,731 --> 00:03:37,310
+It's way better to learn than like learning C++,
+
+49
+00:03:37,590 --> 00:03:39,750
+which is the first language I learned was C++.
+
+50
+00:03:39,750 --> 00:03:43,631
+And holy shit, C++ is such a bear to learn
+
+51
+00:03:43,631 --> 00:03:44,470
+compared to Python.
+
+52
+00:03:44,631 --> 00:03:47,250
+You use Python when you need to get data
+
+53
+00:03:47,250 --> 00:03:49,470
+that is outside of the warehouse.
+
+54
+00:03:49,611 --> 00:03:52,430
+Like maybe your data is in a Google Sheet,
+
+55
+00:03:52,710 --> 00:04:03,486
+or maybe your data is in Salesforce or maybe your data is anywhere else It could be a website or maybe it in OpenAI because you using AI to scrape data You can use OpenAI with Python
+
+56
+00:04:03,486 --> 00:04:10,366
+very easily. You use Python APIs to bring data in, and then you also use Python to schedule and
+
+57
+00:04:10,366 --> 00:04:16,446
+create your data pipelines. You can think of it as like SQL is like these big blocks that allow you
+
+58
+00:04:16,446 --> 00:04:21,886
+to transform data in a very efficient way. And then Python is the glue that puts everything
+
+59
+00:04:21,886 --> 00:04:27,866
+together. And those are going to be the two big tools and languages that you use in data engineering
+
+60
+00:04:27,866 --> 00:04:34,026
+to create in a very powerful way. There are situations in which you could use either tool,
+
+61
+00:04:34,126 --> 00:04:40,226
+Python or SQL, to solve the same problem. This is actually very common with a tool called PySpark.
+
+62
+00:04:40,326 --> 00:04:44,186
+In PySpark, right, you could write the same thing in Python that you could write in SQL.
+
+63
+00:04:44,186 --> 00:04:50,166
+They are interchangeable. Both Python and SQL can express each other. It's just very difficult for
+
+64
+00:04:50,166 --> 00:04:55,266
+SQL to access external things because it's designed to work in a very specific
+
+65
+00:04:55,286 --> 00:04:59,406
+data warehouse space and it's designed for data transformation, not data
+
+66
+00:04:59,406 --> 00:05:01,126
+extraction at the end of the day.
+
+67
+00:05:01,126 --> 00:05:05,666
+Like if you can learn these two tools, you will be well on your way to
+
+68
+00:05:05,666 --> 00:05:07,986
+becoming a very good data engineer.
+
+69
+00:05:08,226 --> 00:05:12,546
+So, uh, I will be creating a lab here in just a little bit.
+
+70
+00:05:12,546 --> 00:05:16,666
+So, uh, make sure to follow the next video in this series to catch that.
+

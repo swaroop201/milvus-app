@@ -3,4 +3,12 @@
 venv/
 __pycache__/
 *.pyc
+*.pyo
 myenv/
+# Generated data (re-run scripts to recreate; audio is large)
+downloads/youtube_audio/
+# OS / IDE
+.DS_Store
+.idea/
+*.swp
+*.swo
