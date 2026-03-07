@@ -15,6 +15,7 @@ from openai import OpenAI
 from pymilvus import MilvusClient, DataType
 from pymilvus.exceptions import DataNotMatchException
 from sentence_transformers import SentenceTransformer
+from sentence_transformers import CrossEncoder
 
 load_dotenv()
 
@@ -39,7 +40,9 @@ if (
 else:
     MILVUS_URI = MILVUS_URI_RAW
 MILVUS_TIMEOUT = float(os.environ.get("MILVUS_TIMEOUT", "30"))
-RAG_TOP_K = 5
+# Number of chunks to retrieve from vector search; we rerank these then keep top RAG_TOP_K for context.
+RAG_TOP_K_RETRIEVE = int(os.environ.get("RAG_TOP_K_RETRIEVE", "20"))
+RAG_TOP_K = int(os.environ.get("RAG_TOP_K", "5"))
 # Only use retrieved chunks with similarity above this (COSINE: 0=far, 1=identical). Chunks below are ignored so the model can free-chat.
 RAG_SIMILARITY_THRESHOLD = float(os.environ.get("RAG_SIMILARITY_THRESHOLD", "0.5"))
 CHUNK_SIZE = 500
@@ -52,6 +55,8 @@ HF_EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 HF_EMBEDDING_DIM = 384
 HF_EMBEDDING_MODEL_INSTANCE = None  # Lazy load on first use
 GROQ_MODEL = "llama-3.1-8b-instant"
+RERANK_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+RERANK_MODEL_INSTANCE: CrossEncoder | None = None
 
 
 def _use_groq() -> bool:
@@ -276,6 +281,26 @@ def embed_texts(texts: list[str]) -> list[list[float]]:
     return [item.embedding for item in response.data]
 
 
+def _rerank_hits(query: str, hits: list[dict], text_field: str) -> list[dict]:
+    """
+    Optional reranking step using a cross-encoder that scores (query, text) pairs.
+    This refines the order of the top-k vector search results.
+    """
+    global RERANK_MODEL_INSTANCE
+    if not hits:
+        return hits
+    if RERANK_MODEL_INSTANCE is None:
+        print(f"Loading rerank model: {RERANK_MODEL}")
+        RERANK_MODEL_INSTANCE = CrossEncoder(RERANK_MODEL)
+    # Build (query, text) pairs for the cross-encoder.
+    pairs = [(query, (h["entity"].get(text_field) or "")) for h in hits]
+    scores = RERANK_MODEL_INSTANCE.predict(pairs)
+    for h, s in zip(hits, scores):
+        h["rerank_score"] = float(s)
+    hits.sort(key=lambda h: h.get("rerank_score", 0.0), reverse=True)
+    return hits
+
+
 def chunk_text(text: str, size: int = CHUNK_SIZE, overlap: int = CHUNK_OVERLAP) -> list[str]:
     """Split text into overlapping chunks."""
     text = text.strip()
@@ -471,14 +496,14 @@ def task(request: TaskRequest):
         results = milvus.search(
             collection_name=coll_name,
             data=[query_embedding],
-            limit=RAG_TOP_K,
+            limit=RAG_TOP_K_RETRIEVE,
             output_fields=[text_f, channel_f, "$meta"],
         )
     except DataNotMatchException:
         results = milvus.search(
             collection_name=coll_name,
             data=[query_embedding],
-            limit=RAG_TOP_K,
+            limit=RAG_TOP_K_RETRIEVE,
             output_fields=[text_f, "$meta"],
         )
     except Exception as e:
@@ -487,17 +512,27 @@ def task(request: TaskRequest):
             detail=f"Milvus search failed: {e}",
         )
 
-    hits = results[0] if results else []
-    context_parts: list[str] = []
-    seen: set[str] = set()
-    debug_lines: list[str] = []
-    for idx, hit in enumerate(hits, start=1):
+    raw_hits = results[0] if results else []
+    # First pass: apply similarity threshold and normalize hit structure.
+    filtered_hits: list[dict] = []
+    for hit in raw_hits:
         # Milvus COSINE returns similarity (higher=better). Only use chunks above threshold so we can free-chat when nothing matches.
         score = hit.get("distance")  # pymilvus often puts similarity in "distance" for COSINE
         if score is not None and isinstance(score, (int, float)):
             if score < RAG_SIMILARITY_THRESHOLD:
                 continue
-        entity = hit.get("entity") or hit
+        filtered_hits.append({"entity": hit.get("entity") or hit, "vector_score": score})
+
+    # Second pass: rerank filtered hits using cross-encoder (query, text) relevance, then keep top RAG_TOP_K.
+    reranked_hits = _rerank_hits(query, filtered_hits, text_f)
+    reranked_hits = reranked_hits[:RAG_TOP_K]
+
+    context_parts: list[str] = []
+    seen: set[str] = set()
+    debug_lines: list[str] = []
+    for idx, h in enumerate(reranked_hits, start=1):
+        entity = h["entity"]
+        score = h.get("vector_score")
         text = entity.get(text_f)
         meta = entity.get("$meta") or {}
         if text and text not in seen:
@@ -513,8 +548,13 @@ def task(request: TaskRequest):
                 score_str = f"{score:.3f}"
             else:
                 score_str = "None"
+            rerank_score = h.get("rerank_score")
+            if isinstance(rerank_score, (int, float)):
+                rerank_str = f"{rerank_score:.3f}"
+            else:
+                rerank_str = "None"
             debug_lines.append(
-                f"hit {idx}: score={score_str}, channel={channel_name!r}, "
+                f"hit {idx}: score={score_str}, rerank={rerank_str}, channel={channel_name!r}, "
                 f"video_id={video_id}, start_ts={start_ts}, end_ts={end_ts}"
             )
 

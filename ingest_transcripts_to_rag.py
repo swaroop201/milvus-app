@@ -4,9 +4,8 @@ from typing import List
 
 from dotenv import load_dotenv
 
-# Reuse the same RAG configuration, chunking, and Milvus helpers
+# Reuse the same RAG configuration and Milvus helpers
 from main import (  # type: ignore
-    chunk_text,
     get_rag_collection_name,
     ingest_documents_with_metadata,
 )
@@ -82,28 +81,66 @@ def main() -> None:
             print("  No segments found; skipping.")
             continue
 
-        count = 0
-        for seg in segments:
+        # Group multiple segments into larger chunks (e.g. more than 3 lines) for better context.
+        MIN_SEGMENTS_PER_CHUNK = 5
+        MAX_CHARS_PER_CHUNK = 1400
+
+        buffer_texts: list[str] = []
+        buffer_start: float | None = None
+        buffer_end: float | None = None
+        buffer_chars = 0
+        chunk_count = 0
+
+        def flush_chunk() -> None:
+            nonlocal buffer_texts, buffer_start, buffer_end, buffer_chars, chunk_count
+            if not buffer_texts or buffer_start is None or buffer_end is None:
+                return
+            text = " ".join(buffer_texts).strip()
+            if not text:
+                buffer_texts = []
+                buffer_start = None
+                buffer_end = None
+                buffer_chars = 0
+                return
+            all_texts.append(text)
+            all_channel_names.append(creator)
+            all_video_ids.append(video_id)
+            all_start_secs.append(buffer_start)
+            all_end_secs.append(buffer_end)
+            chunk_count += 1
+            buffer_texts = []
+            buffer_start = None
+            buffer_end = None
+            buffer_chars = 0
+
+        for idx, seg in enumerate(segments):
             text = str(seg.get("text", "")).strip()
             if not text:
                 continue
             start = float(seg.get("start", 0.0) or 0.0)
             end = float(seg.get("end", 0.0) or 0.0)
-            all_texts.append(text)
-            all_channel_names.append(creator)
-            all_video_ids.append(video_id)
-            all_start_secs.append(start)
-            all_end_secs.append(end)
-            count += 1
 
-        print(f"  Generated {count} segments from transcript (channel: {creator}).")
+            if buffer_start is None:
+                buffer_start = start
+            buffer_end = end
+            buffer_texts.append(text)
+            buffer_chars += len(text)
+
+            is_last_segment = idx == len(segments) - 1
+            if (
+                len(buffer_texts) >= MIN_SEGMENTS_PER_CHUNK
+                and buffer_chars >= MAX_CHARS_PER_CHUNK
+            ) or is_last_segment:
+                flush_chunk()
+
+        print(f"  Generated {chunk_count} chunks from transcript (channel: {creator}).")
 
     if not all_texts:
-        print("No segments to ingest.")
+        print("No chunks to ingest.")
         return
 
     print(
-        f"Ingesting {len(all_texts)} segments into RAG collection "
+        f"Ingesting {len(all_texts)} chunks into RAG collection "
         f"'{get_rag_collection_name()}' (with channel_name, video_id, and timestamps)..."
     )
     inserted = ingest_documents_with_metadata(
